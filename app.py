@@ -4,6 +4,8 @@ from db_connect import get_db_connection  # your DB connection function
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # needed for sessions
 
+
+
 # ---------------- Home / Dashboard ----------------
 @app.route('/')
 @app.route('/dashboard')
@@ -110,7 +112,43 @@ def tasks():
     except mysql.connector.Error as err:
         flash(f"Database error: {err}", "danger")
         return render_template("tasks.html", tasks=[], username=session.get("username"))
+    
+# ---------------- Orders Route ----------------
+
+
+# ---------------- Clear Orders ----------------
+@app.route('/orders', methods=['GET', 'POST'])
+def orders():
+    if "username" not in session:
+        return redirect(url_for('login'))
+
+    username = session["username"]
+
+    if 'work_orders' not in session:
+        session['work_orders'] = []
+
+    if request.method == "POST":
+        order = {
+            "customer": request.form.get("customer", ""),
+            "status": request.form.get("status", "Pending"),
+            "priority": request.form.get("priority", "Medium"),
+            "order_date": request.form.get("order_date", ""),
+            "work_date": request.form.get("work_date", ""),
+            "location": request.form.get("location", ""),
+            "work_time": request.form.get("work_time", "")
+        }
+        session['work_orders'].append(order)
+        session.modified = True
+        return redirect(url_for('orders'))
+
+    return render_template("orders.html", username=username, orders=session['work_orders'])
 
 # ---------------- Run App ----------------
+
+@app.route('/hybridaction/<path:anything>')
+def dummy_hybridaction(anything):
+    return {"status": "ignored"}, 200
+
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% block title %}Work Orders{% endblock %}
+
 {% block content %}
 <h2>Agricultural Work Dashboard - {{ username }}</h2>
 
@@ -58,8 +60,10 @@
                     <input type="text" name="work_time" class="form-control" placeholder="e.g., 08:00 - 14:00">
                 </div>
 
+                <!-- Submit Button -->
                 <div class="col-md-12 mb-3">
                     <button type="submit" class="btn btn-success">Add Work Entry</button>
+                    <a href="/orders/clear" class="btn btn-danger">Clear All Orders</a>
                 </div>
             </div>
         </form>
@@ -124,94 +128,4 @@
 </div>
 {% endblock %}
 
-<!-- CSS -->
-<style>
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f0f2f5;
-    padding: 20px;
-    color: #333;
-}
-
-h2 {
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: #1f3c88;
-    text-align: center;
-}
-
-.card {
-    border: none;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    margin-bottom: 25px;
-}
-
-.card-body h5 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #495057;
-}
-
-input.form-control,
-select.form-control {
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    padding: 8px 12px;
-    transition: all 0.3s ease;
-}
-
-input:focus, select:focus {
-    box-shadow: 0 0 5px #1f3c88;
-    border-color: #1f3c88;
-}
-
-button.btn-success {
-    background: linear-gradient(45deg, #28a745, #218838);
-    border: none;
-    border-radius: 8px;
-    padding: 10px 22px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-button.btn-success:hover {
-    background: linear-gradient(45deg, #218838, #28a745);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table th {
-    background: linear-gradient(90deg, #1f3c88, #3a5bbf);
-    color: #fff;
-    font-weight: 600;
-    text-align: center;
-    padding: 12px;
-}
-
-table td {
-    padding: 10px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.badge {
-    font-size: 0.85rem;
-    padding: 5px 10px;
-    border-radius: 50px;
-    font-weight: 500;
-}
-
-@media (max-width: 768px) {
-    h2 { font-size: 1.4rem; }
-    table th, table td { font-size: 0.85rem; padding: 6px; }
-    input, select { padding: 6px 10px; }
-    button.btn-success { padding: 8px 16px; font-size: 0.9rem; }
-}
-</style>
+<!-- Your CSS can remain outside the block if included in base.html -->
