@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Agricultural Work Dashboard - {{ username }}</h2>
+
+<!-- Add New Work Entry Form -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>Add New Work Entry</h5>
+        <form method="POST">
+            <div class="row">
+                <!-- Customer/Farm -->
+                <div class="col-md-3 mb-3">
+                    <label>Customer/Farm</label>
+                    <input type="text" name="customer" class="form-control" placeholder="Farm or Customer Name" required>
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-2 mb-3">
+                    <label>Status</label>
+                    <select name="status" class="form-control">
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <!-- Priority -->
+                <div class="col-md-2 mb-3">
+                    <label>Priority</label>
+                    <select name="priority" class="form-control">
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+
+                <!-- Order Date -->
+                <div class="col-md-2 mb-3">
+                    <label>Order Date</label>
+                    <input type="date" name="order_date" class="form-control" required>
+                </div>
+
+                <!-- Expected Work Date -->
+                <div class="col-md-2 mb-3">
+                    <label>Expected Work Date</label>
+                    <input type="date" name="work_date" class="form-control" required>
+                </div>
+
+                <!-- Location -->
+                <div class="col-md-3 mb-3">
+                    <label>Location</label>
+                    <input type="text" name="location" class="form-control" placeholder="Work Location">
+                </div>
+
+                <!-- Work Time -->
+                <div class="col-md-2 mb-3">
+                    <label>Work Time</label>
+                    <input type="text" name="work_time" class="form-control" placeholder="e.g., 08:00 - 14:00">
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <button type="submit" class="btn btn-success">Add Work Entry</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Work Orders Table -->
+<div class="card">
+    <div class="card-body">
+        <h5>All Work Orders</h5>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Customer/Farm</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Order Date</th>
+                    <th>Expected Work Date</th>
+                    <th>Location</th>
+                    <th>Work Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.customer or '-' }}</td>
+                    <td>
+                        {% if order.status == "Pending" %}
+                            <span class="badge bg-warning text-dark">{{ order.status }}</span>
+                        {% elif order.status == "Processing" %}
+                            <span class="badge bg-info text-dark">{{ order.status }}</span>
+                        {% elif order.status == "Completed" %}
+                            <span class="badge bg-success">{{ order.status }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ order.status or 'Unknown' }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.priority == "High" %}
+                            <span class="badge bg-danger">{{ order.priority }}</span>
+                        {% elif order.priority == "Medium" %}
+                            <span class="badge bg-warning text-dark">{{ order.priority }}</span>
+                        {% elif order.priority == "Low" %}
+                            <span class="badge bg-success">{{ order.priority }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ order.priority or 'Unknown' }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ order.order_date or '-' }}</td>
+                    <td>{{ order.work_date or '-' }}</td>
+                    <td>{{ order.location or '-' }}</td>
+                    <td>{{ order.work_time or '-' }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">No work orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+<!-- CSS -->
+<style>
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    padding: 20px;
+    color: #333;
+}
+
+h2 {
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #1f3c88;
+    text-align: center;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+
+.card-body h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+input.form-control,
+select.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 5px #1f3c88;
+    border-color: #1f3c88;
+}
+
+button.btn-success {
+    background: linear-gradient(45deg, #28a745, #218838);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button.btn-success:hover {
+    background: linear-gradient(45deg, #218838, #28a745);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    background: linear-gradient(90deg, #1f3c88, #3a5bbf);
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    padding: 12px;
+}
+
+table td {
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    h2 { font-size: 1.4rem; }
+    table th, table td { font-size: 0.85rem; padding: 6px; }
+    input, select { padding: 6px 10px; }
+    button.btn-success { padding: 8px 16px; font-size: 0.9rem; }
+}
+</style>

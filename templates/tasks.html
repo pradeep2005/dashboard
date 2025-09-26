@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Agriculture Tasks</title>
+    <style>
+        /* 🔹 Modern Font & Background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #fff9c4);
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00695c;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        /* 🔹 Table Styles */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px; /* adds space between rows */
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #004d40;
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        tbody tr {
+            background-color: white;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        tbody tr:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+        }
+
+        /* 🔹 Status Badges */
+        .status {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            color: white;
+            display: inline-block;
+            font-size: 0.9em;
+        }
+
+        .status-pending { background-color: #ff9800; }
+        .status-inprogress { background-color: #0288d1; }
+        .status-completed { background-color: #388e3c; text-decoration: line-through; }
+
+        /* 🔹 Progress Bars */
+        .progress-container {
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            width: 120px;
+            height: 12px;
+        }
+
+        .progress-bar {
+            height: 12px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #43a047, #66bb6a);
+        }
+
+        /* 🔹 Action Buttons */
+        button {
+            padding: 6px 14px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .complete-btn { background-color: #43a047; color: white; }
+        .complete-btn:hover { background-color: #388e3c; }
+        .edit-btn { background-color: #0288d1; color: white; }
+        .edit-btn:hover { background-color: #0277bd; }
+    </style>
+</head>
+<body>
+
+<h1>My Agriculture Tasks</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Task Name</th>
+            <th>Status</th>
+            <th>Assigned Employee</th>
+            <th>Tool / Machinery</th>
+            <th>Priority</th>
+            <th>Due Date</th>
+            <th>Progress</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Plow field section A</td>
+            <td><span class="status status-pending">Pending</span></td>
+            <td>John</td>
+            <td><img src="images/tractor.jpg" alt="Tractor"></td>
+            <td>High</td>
+            <td>2025-09-26</td>
+            <td>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width:40%;"></div>
+                </div>
+            </td>
+            <td>
+                <button class="complete-btn">Complete</button>
+                <button class="edit-btn">Edit</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Water crops section B</td>
+            <td><span class="status status-inprogress">In Progress</span></td>
+            <td>Mary</td>
+            <td><img src="images/irrigation.jpg" alt="Irrigation Pump"></td>
+            <td>Medium</td>
+            <td>2025-09-25</td>
+            <td>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width:70%;"></div>
+                </div>
+            </td>
+            <td>
+                <button class="complete-btn">Complete</button>
+                <button class="edit-btn">Edit</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Harvest wheat</td>
+            <td><span class="status status-completed">Completed</span></td>
+            <td>David</td>
+            <td><img src="images/plow.jpg" alt="Plow"></td>
+            <td>High</td>
+            <td>2025-09-24</td>
+            <td>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width:100%;"></div>
+                </div>
+            </td>
+            <td>
+                <button class="complete-btn">Complete</button>
+                <button class="edit-btn">Edit</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Check irrigation system</td>
+            <td><span class="status status-pending">Pending</span></td>
+            <td>Linda</td>
+            <td><img src="images/irrigation.jpg" alt="Irrigation"></td>
+            <td>Low</td>
+            <td>2025-09-27</td>
+            <td>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width:20%;"></div>
+                </div>
+            </td>
+            <td>
+                <button class="complete-btn">Complete</button>
+                <button class="edit-btn">Edit</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Fertilize corn field</td>
+            <td><span class="status status-inprogress">In Progress</span></td>
+            <td>John</td>
+            <td><img src="images/tractor.jpg" alt="Sprayer"></td>
+            <td>High</td>
+            <td>2025-09-28</td>
+            <td>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width:50%;"></div>
+                </div>
+            </td>
+            <td>
+                <button class="complete-btn">Complete</button>
+                <button class="edit-btn">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

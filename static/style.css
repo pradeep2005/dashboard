@@ -1,27 +1,41 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     text-align: center;
-    padding: 50px;
-    background-color: #f0f0f0;
+    padding: 20px;
 }
 
-form {
-    display: inline-block;
+h1 {
+    color: #2E8B57;
+}
+
+.tools-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
     margin-top: 20px;
 }
 
-input {
-    margin: 5px;
-    padding: 10px;
+.tool-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 15px;
     width: 200px;
 }
 
-button {
-    padding: 10px 20px;
-    margin-top: 10px;
+.tool-card img {
+    width: 100%;
+    border-radius: 10px;
 }
 
-a {
-    text-decoration: none;
-    color: blue;
+.tool-card h2 {
+    margin: 10px 0 5px 0;
+    color: #2E8B57;
+}
+
+.tool-card p {
+    font-size: 14px;
+    color: #555;
 }
