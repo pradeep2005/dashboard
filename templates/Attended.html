@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agriculture Work Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+        }
+
+        header {
+            background-color: #27ae60;
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #2c3e50;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ecf0f1;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Status Colors */
+        .status-pending { color: #e67e22; font-weight: bold; }
+        .status-completed { color: #27ae60; font-weight: bold; }
+        .status-not-started { color: #c0392b; font-weight: bold; }
+        .status-in-progress { color: #2980b9; font-weight: bold; }
+
+        tr:hover {
+            background-color: #dff9fb;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 3px 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Agriculture Work Tracker Dashboard</h1>
+</header>
+
+<div class="container">
+
+    <!-- Pending Tasks -->
+    <h2>Pending Tasks</h2>
+    <table id="pending-tasks">
+        <thead>
+            <tr><th>Task</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Plowing the field</td>
+                <td class="status-pending">Pending</td>
+                <td><button onclick="editTask(this)">Edit</button></td>
+            </tr>
+            <tr>
+                <td>Harvesting crops</td>
+                <td class="status-pending">Pending</td>
+                <td><button onclick="editTask(this)">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Completed Tasks -->
+    <h2>Completed Tasks</h2>
+    <table id="completed-tasks">
+        <thead>
+            <tr><th>Task</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Sowing seeds</td>
+                <td class="status-completed">Completed</td>
+                <td><button onclick="editTask(this)">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Not Started Tasks -->
+    <h2>Not Started Tasks</h2>
+    <table id="not-started-tasks">
+        <thead>
+            <tr><th>Task</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Fertilizing</td>
+                <td class="status-not-started">Not Started</td>
+                <td><button onclick="editTask(this)">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- In Progress Tasks -->
+    <h2>In Progress Tasks</h2>
+    <table id="in-progress-tasks">
+        <thead>
+            <tr><th>Task</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Watering crops</td>
+                <td class="status-in-progress">In Progress</td>
+                <td><button onclick="editTask(this)">Edit</button></td>
+            </tr>
+            <tr>
+                <td>Weeding</td>
+                <td class="status-in-progress">In Progress</td>
+                <td><button onclick="editTask(this)">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+function editTask(button) {
+    let row = button.parentElement.parentElement;
+    let taskCell = row.cells[0];
+    let statusCell = row.cells[1];
+
+    let currentTask = taskCell.innerText;
+    let currentStatus = statusCell.innerText;
+
+    // Replace text with input fields
+    taskCell.innerHTML = `<input type="text" value="${currentTask}">`;
+    statusCell.innerHTML = `
+        <select>
+            <option value="Pending" ${currentStatus=="Pending"?"selected":""}>Pending</option>
+            <option value="Completed" ${currentStatus=="Completed"?"selected":""}>Completed</option>
+            <option value="Not Started" ${currentStatus=="Not Started"?"selected":""}>Not Started</option>
+            <option value="In Progress" ${currentStatus=="In Progress"?"selected":""}>In Progress</option>
+        </select>
+    `;
+
+    // Change button to Save
+    button.innerText = "Save";
+    button.onclick = function() { saveTask(this); };
+}
+
+function saveTask(button) {
+    let row = button.parentElement.parentElement;
+    let taskCell = row.cells[0];
+    let statusCell = row.cells[1];
+
+    let updatedTask = taskCell.querySelector('input').value;
+    let updatedStatus = statusCell.querySelector('select').value;
+
+    taskCell.innerText = updatedTask;
+    statusCell.innerText = updatedStatus;
+
+    // Update status color
+    statusCell.className = "";
+    if(updatedStatus == "Pending") statusCell.classList.add("status-pending");
+    else if(updatedStatus == "Completed") statusCell.classList.add("status-completed");
+    else if(updatedStatus == "Not Started") statusCell.classList.add("status-not-started");
+    else if(updatedStatus == "In Progress") statusCell.classList.add("status-in-progress");
+
+    button.innerText = "Edit";
+    button.onclick = function() { editTask(this); };
+}
+</script>
+
+</body>
+</html>

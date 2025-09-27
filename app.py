@@ -150,5 +150,107 @@ def dummy_hybridaction(anything):
     return {"status": "ignored"}, 200
 
 
+
+tasks = [
+    {"name": "Tractor Maintenance", "status": "Pending"},
+    {"name": "Plow Repair", "status": "Completed"},
+    {"name": "Irrigation Pump Check", "status": "Pending"},
+]
+
+attendance = [
+    {"name": " ", "status": " ", "tool": " "},
+    {"name": " ", "status": " ", "tool": " "},
+    {"name": " ", "status": " ", "tool": " "},
+]
+
+equipment = [
+    {"name": "Tractor"},
+    {"name": "Plow"},
+    {"name": "Irrigation Pump"},
+]
+
+orders = [
+    {"id": 1, "tool": "Tractor", "quantity": 2, "status": "Pending"},
+    {"id": 2, "tool": "Plow", "quantity": 1, "status": "Completed"},
+    {"id": 3, "tool": "Irrigation Pump", "quantity": 1, "status": "Pending"},
+]
+
+# ------------------ ROUTES ------------------
+
+@app.route("/")
+def dashboard_view():
+    pending_tasks = [t for t in tasks if t["status"] == "Pending"]
+    completed_tasks = [t for t in tasks if t["status"] == "Completed"]
+    present_count = sum(1 for a in attendance if a["status"] == "Present")
+    absent_count = sum(1 for a in attendance if a["status"] == "Absent")
+    return render_template(
+        "dashboard.html",
+        tasks=tasks,
+        pending_tasks=pending_tasks,
+        completed_tasks=completed_tasks,
+        attendance=attendance,
+        equipment=equipment,
+        present_count=present_count,
+        absent_count=absent_count
+    )
+
+@app.route("/attended")
+def attended_view():
+    present_count = sum(1 for a in attendance if a["status"] == "Present")
+    absent_count = sum(1 for a in attendance if a["status"] == "Absent")
+    return render_template(
+        "attended.html",
+        attendance=attendance,
+        present_count=present_count,
+        absent_count=absent_count
+    )
+
+@app.route("/tasks")
+def tasks_view():
+    pending_tasks = [t for t in tasks if t["status"] == "Pending"]
+    completed_tasks = [t for t in tasks if t["status"] == "Completed"]
+    return render_template(
+        "tasks.html",
+        tasks=tasks,
+        pending_tasks=pending_tasks,
+        completed_tasks=completed_tasks
+    )
+
+@app.route("/orders")
+def orders_view():
+    pending_orders = [o for o in orders if o["status"] == "Pending"]
+    completed_orders = [o for o in orders if o["status"] == "Completed"]
+    return render_template(
+        "orders.html",
+        orders=orders,
+        pending_orders=pending_orders,
+        completed_orders=completed_orders
+    )
+
+
+tasks = [
+    {"name": "Plowing the field", "status": "Pending"},
+    {"name": "Sowing seeds", "status": "Completed"},
+    {"name": "Watering crops", "status": "In Progress"},
+    {"name": "Fertilizing", "status": "Not Started"},
+    {"name": "Harvesting", "status": "Pending"},
+    {"name": "Weeding", "status": "In Progress"},
+]
+
+@app.route('/')
+def attended():
+    # Categorize tasks by status
+    pending_tasks = [task for task in tasks if task['status'] == 'Pending']
+    completed_tasks = [task for task in tasks if task['status'] == 'Completed']
+    not_started_tasks = [task for task in tasks if task['status'] == 'Not Started']
+    in_progress_tasks = [task for task in tasks if task['status'] == 'In Progress']
+
+    return render_template(
+        'dashboard.html',
+        pending_tasks=pending_tasks,
+        completed_tasks=completed_tasks,
+        not_started_tasks=not_started_tasks,
+        in_progress_tasks=in_progress_tasks
+    )
 if __name__ == "__main__":
     app.run(debug=True)
